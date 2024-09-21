@@ -21,4 +21,15 @@ typedef struct s_all
 	char	**av;
 }			t_all;
 
+
+/* FUNCTIONS */
+void	fetch_full_map(t_all *all)
+;
+void	check_file_extention(t_all *all)
+;
+int	count_mapfile_height(t_all *all)
+;
+void	ft_close(int fd)
+;
+
 #endif

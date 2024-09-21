@@ -5,19 +5,19 @@ void	ft_close(int fd)
 	if (close(fd) == -1)
 	{
 		// TODO free what should be freed
-		return (ft_putstr_fd("error closing file\n", 2), exit(2));
+		return (ft_putstr_fd("error closing file\n", 2), exit(1));
 	}
 }
 
-int	count_mapfile_height(void)
+int	count_mapfile_height(t_all *all)
 {
 	char	*line;
 
 	int(fd), (i);
-	fd = open("./maps/map.cub", O_RDONLY);
+	fd = open(all->av[1], O_RDONLY);
 	i = 0;
 	if (fd < 0)
-		return (ft_putstr_fd("error with mapfile\n", 2), exit(2), 1);
+		return (ft_putstr_fd("error with mapfile\n", 2), exit(1), 1);
 	(line = get_next_line(fd));
 	while (line)
 	{
@@ -29,7 +29,17 @@ int	count_mapfile_height(void)
 	return (i);
 }
 
-void	fetch_map(t_all *all)
+void	check_file_extention(t_all *all)
+{
+	int	len;
+
+	len = 0;
+	len = ft_strlen(all->av[1]);
+	if (ft_strncmp(((all->av[1]) + (len - 4)), ".cub", 4))
+		return (ft_putstr_fd("bad extention\n", 2), exit(1));
+}
+
+void	fetch_full_map(t_all *all)
 {
 	int		fd;
 	int		height_full_map;
@@ -38,11 +48,11 @@ void	fetch_map(t_all *all)
 
 	i = 0;
 	all->ac = 2;
-	// int width_full_map;
-	height_full_map = count_mapfile_height();
-	fd = open("./maps/map.cub", O_RDONLY);
+	check_file_extention(all);
+	height_full_map = count_mapfile_height(all);
+	fd = open(all->av[1], O_RDONLY);
 	if (fd < 0)
-		return (ft_putstr_fd("fd < 0\n", 2), exit(2));
+		return (ft_putstr_fd("error with mapfile\n", 2), exit(1));
 	height_full_map++;
 	all->full_map = ft_calloc((height_full_map + 1), sizeof(char *));
 	(line = get_next_line(fd));
@@ -51,21 +61,17 @@ void	fetch_map(t_all *all)
 		if (ft_strchr(line, '\n'))
 			line[ft_strlen(line) - 1] = '\0';
 		all->full_map[i] = ft_strdup(line);
-		i++;
-		free(line);
+		(free(line), i++);
 		line = get_next_line(fd);
 	}
-	all->full_map[i] = NULL;
+	// all->full_map[i] = NULL;
 	ft_close(fd);
 }
 
-void	parsing(t_all *all, int ac, char **av)
+void	print_full_map(t_all *all)
 {
 	int	i;
 
-	all->ac = ac;
-	all->av = av;
-	fetch_map(all);
 	i = 0;
 	while (all->full_map[i])
 	{
@@ -74,10 +80,19 @@ void	parsing(t_all *all, int ac, char **av)
 	}
 }
 
+void	parsing(t_all *all, int ac, char **av)
+{
+	all->ac = ac;
+	all->av = av;
+	fetch_full_map(all);
+	// print_full_map(all);
+}
+
 int	main(int ac, char **av)
 {
-	t_all *all;
-    all = ft_calloc(1, sizeof(t_all));
+	t_all	*all;
+
+	all = ft_calloc(1, sizeof(t_all));
 	if (ac != 2)
 		return (ft_putstr_fd("bad arguments\n", 2), 1);
 	parsing(all, ac, av);

@@ -6,7 +6,7 @@ CFLAGS = -Wall -Wextra  -g#-Werror
 C_FILES = ${wildcard src/*.c}
 C_FILES_GNL = ${wildcard gnl/*.c}	#TODO remove wildcard 
 C_FILES_LIBFT = libft/ft_putstr_fd.c libft/ft_putchar_fd.c libft/ft_substr.c libft/ft_strlen.c\
-libft/ft_strjoin.c libft/ft_strdup.c libft/ft_strchr.c libft/ft_calloc.c libft/ft_bzero.c 
+libft/ft_strjoin.c libft/ft_strdup.c libft/ft_strchr.c libft/ft_calloc.c libft/ft_bzero.c libft/ft_strncmp.c 
 O_FILES = ${C_FILES:.c=.o}
 O_FILES += ${C_FILES_GNL:.c=.o}
 O_FILES += ${C_FILES_LIBFT:.c=.o}

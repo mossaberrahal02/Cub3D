@@ -6,7 +6,7 @@
 /*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 23:32:21 by merrahal          #+#    #+#             */
-/*   Updated: 2024/03/02 16:03:09 by merrahal         ###   ########.fr       */
+/*   Updated: 2024/09/21 10:48:20 by merrahal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s, char const *set);
 char	**ft_split(char const *s, char c);
+char	**ft_split_multi(char const *s, char *c);
 void	ft_putchar_fd(char c, int fd);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));;
 void	ft_putstr_fd(char *s, int fd);

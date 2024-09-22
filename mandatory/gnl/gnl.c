@@ -6,7 +6,7 @@
 /*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:21:14 by merrahal          #+#    #+#             */
-/*   Updated: 2024/09/20 11:46:15 by merrahal         ###   ########.fr       */
+/*   Updated: 2024/09/22 08:28:18 by merrahal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,9 @@ char	*get_after_nl(char *str)
 	if (str[i] != '\0')
 		i++;
 	else
-	{
-		free(str);
 		return (NULL);
-	}
 	tmp = ft_strdup(str + i);
-	free(str);
+	gc_push(tmp);
 	return (tmp);
 }
 
@@ -46,10 +43,8 @@ char	*get_before_nl(char *str)
 	return (ft_substr(str, 0, i + 1));
 }
 
-char	*ft_free(char **result, char *buffer)
+char	*ft_free(char **result)
 {
-	free(buffer);
-	free(*result);
 	*result = NULL;
 	return (NULL);
 }
@@ -62,23 +57,21 @@ char	*get_line2(int fd, char **result)
 
 	there_is_nl = ft_strchr2(*result, '\n');
 	str = malloc(BUFFER_SIZE + 1);
+	gc_push(str);
 	while (!there_is_nl)
 	{
-		read_return = (read(fd, str, BUFFER_SIZE));
+		read_return = read(fd, str, BUFFER_SIZE);
 		if (read_return < 0)
-			return (ft_free(result, str));
+			return (ft_free(result));
 		str[read_return] = '\0';
 		*result = ft_strjoin(*result, str);
+		gc_push(*result);
 		if (read_return == 0 && *result[0] != '\0')
-		{
-			free(str);
 			return (*result);
-		}
 		there_is_nl = ft_strchr2(*result, '\n');
 		if (read_return == 0)
-			return (ft_free(result, str));
+			return (ft_free(result));
 	}
-	free(str);
 	return (*result);
 }
 

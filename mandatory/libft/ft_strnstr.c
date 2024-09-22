@@ -6,7 +6,7 @@
 /*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 22:58:13 by merrahal          #+#    #+#             */
-/*   Updated: 2024/03/02 16:02:40 by merrahal         ###   ########.fr       */
+/*   Updated: 2024/09/22 08:30:48 by merrahal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ char	*ft_strnstr(const char *str, const char *tofind, size_t len)
 		j = 0;
 		i++;
 	}
-	return (0); // <---- type caste to char * ??
+	return (0);
 }

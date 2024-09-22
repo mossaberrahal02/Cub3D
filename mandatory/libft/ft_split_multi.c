@@ -1,13 +1,13 @@
 #include "libft.h"
 
-static int is_separator(char c, char *sep)
+static int	is_separator(char c, char *sep)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (sep[i])
 	{
-		if(sep[i] == c)
+		if (sep[i] == c)
 			return (1);
 		i++;
 	}

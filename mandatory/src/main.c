@@ -13,7 +13,7 @@ void	print_full_map(t_all *all)
 	}
 }
 
-int has_more_then_six_lines(t_all *all)
+int	has_more_then_six_lines(t_all *all)
 {
 	int		i;
 	int		j;
@@ -24,27 +24,31 @@ int has_more_then_six_lines(t_all *all)
 	while (all->full_map[i])
 	{
 		trimmed = ft_strtrim(all->full_map[i], " \t");
-		if(trimmed[0] != '\0')
+		if (trimmed[0] != '\0')
 			j++;
-		free(trimmed);
+		// free(trimmed);
+		gc_push(trimmed);
 		i++;
 	}
 	return (j >= 6);
 }
 
-int 	check_full_map_content(t_all *all)
+int	check_full_map_content(t_all *all)
 {
-	if(!has_more_then_six_lines(all))
+	if (!has_more_then_six_lines(all))
 		return (ft_putstr_fd("Error : map has less than 6 lines\n", 2), 1);
-	return (ft_putstr_fd("hta l daba mlih\n", 2), 0);
+	return (ft_putstr_fd("map has more then 6 lines\n", 2), 0);
 }
 
-void	parsing(t_all *all, int ac, char **av)
+int	parsing(t_all *all, int ac, char **av)
 {
 	all->ac = ac;
 	all->av = av;
-	fetch_full_map(all);
-	check_full_map_content(all);
+	if (fetch_full_map(all))
+		return (1);
+	if (check_full_map_content(all))
+		return (1);
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -52,7 +56,10 @@ int	main(int ac, char **av)
 	t_all	*all;
 
 	all = ft_calloc(1, sizeof(t_all));
+	gc_push(all);
 	if (ac != 2)
 		return (ft_putstr_fd("Error : bad arguments\n", 2), 1);
 	parsing(all, ac, av);
+	_free();
+	printf("good bye\n");
 }

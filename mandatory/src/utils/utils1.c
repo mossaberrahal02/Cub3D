@@ -59,9 +59,11 @@ int	fetch_full_map(t_all *all)
 	line = get_next_line(all->fd);
 	while (line)
 	{
+		// printf("before {%s}\n", line);
 		gc_push(line);
 		if (ft_strchr(line, '\n'))
 			line[ft_strlen(line) - 1] = '\0';
+		// printf("after {%s}\n", line);
 		all->full_map[i] = line;
 		i++;
 		line = get_next_line(all->fd);

@@ -13,7 +13,7 @@ void	print_full_map(t_all *all)
 	}
 }
 
-int	has_more_then_six_lines(t_all *all)
+int	has_more_than_six_lines(t_all *all)
 {
 	int		i;
 	int		j;
@@ -25,17 +25,23 @@ int	has_more_then_six_lines(t_all *all)
 	{
 		trimmed = ft_strtrim(all->full_map[i], " \t");
 		if (trimmed[0] != '\0')
+		{
+			printf("trimmed = {%s}\n", trimmed);
 			j++;
-		// free(trimmed);
+		}
+		// printf("----before all->full_map[i] = {%s}\n", all->full_map[i]);
+		all->full_map[i] = trimmed;
+		// printf("after all->full_map[i] = {%s}\n", all->full_map[i]);
 		gc_push(trimmed);
 		i++;
 	}
-	return (j >= 6);
+	printf("j = %d\n", j);
+	return (j > 6);
 }
 
 int	check_full_map_content(t_all *all)
 {
-	if (!has_more_then_six_lines(all))
+	if (!has_more_than_six_lines(all))
 		return (ft_putstr_fd("Error : map has less than 6 lines\n", 2), 1);
 	return (ft_putstr_fd("map has more then 6 lines\n", 2), 0);
 }

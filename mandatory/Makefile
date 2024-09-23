@@ -1,8 +1,8 @@
 NAME = cub3d
 CC = cc
 INCLUDES = -Iincludes
-# CFLAGS = -Wall -Wextra  -g#-Werror
-CFLAGS = -Wall -Wextra -fsanitize=address -g #-Werror
+CFLAGS = -Wall -Wextra  -g#-Werror
+# CFLAGS = -Wall -Wextra -fsanitize=address -g #-Werror
 C_FILES = ${wildcard src/*.c src/utils/*.c mandatory/gc/*.c}
 C_FILES_GNL = ${wildcard gnl/*.c}	#TODO remove wildcard 
 C_FILES_LIBFT = libft/ft_putstr_fd.c libft/ft_putchar_fd.c libft/ft_substr.c libft/ft_strlen.c \

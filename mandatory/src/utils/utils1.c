@@ -37,8 +37,8 @@ int	check_file_extention(t_all *all)
 	len = 0;
 	len = ft_strlen(all->av[1]);
 	if (ft_strncmp(((all->av[1]) + (len - 4)), ".cub", 4))
-		return (ft_putstr_fd("Error : bad extention\n", 2), 1);
-	return (ft_putstr_fd("good extention\n", 2), 0);
+		return (ft_putstr_fd("Error : bad extention\n", 2), FAILURE);
+	return (ft_putstr_fd("good extention\n", 2), SUCCESS);
 }
 
 int	fetch_full_map(t_all *all)
@@ -48,26 +48,23 @@ int	fetch_full_map(t_all *all)
 
 	i = 0;
 	if (check_file_extention(all))
-		return (1);
+		return (FAILURE);
 	all->height_full_map = count_mapfile_height(all);
 	all->fd = open(all->av[1], O_RDONLY);
 	if (all->fd < 0)
-		return (ft_putstr_fd("Error : error with mapfile\n", 2), 1);
-	all->height_full_map++;
+		return (ft_putstr_fd("Error : error with mapfile\n", 2), FAILURE);
+	// all->height_full_map++;
 	all->full_map = ft_calloc((all->height_full_map + 1), sizeof(char *));
 	gc_push(all->full_map);
 	line = get_next_line(all->fd);
 	while (line)
 	{
-		// printf("before {%s}\n", line);
 		gc_push(line);
 		if (ft_strchr(line, '\n'))
 			line[ft_strlen(line) - 1] = '\0';
-		// printf("after {%s}\n", line);
 		all->full_map[i] = line;
 		i++;
 		line = get_next_line(all->fd);
 	}
-	all->full_map[i] = NULL;
-	return (ft_close(all->fd), 0);
+	return (ft_close(all->fd), SUCCESS);
 }

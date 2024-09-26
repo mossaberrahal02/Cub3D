@@ -22,6 +22,7 @@ typedef struct s_rgb
 	char				*b;
 }						t_rgb;
 
+
 typedef struct s_texture
 {
 	int					c_count;
@@ -40,6 +41,7 @@ typedef struct s_all
 {
 	t_rgb				c;
 	t_rgb				f;
+	int p_count;
 	char				**map;
 	t_texture			textures;
 	int					first_sex_valid_lines;
@@ -52,7 +54,10 @@ typedef struct s_all
 
 # define SUCCESS 0
 # define FAILURE 1
-
+#define GREEN  "\033[92m"
+#define RED  "\033[91m"
+#define YELLOW  "\033[93m"
+#define ENDC  "\033[0m"
 /* FUNCTIONS */
 int						fetch_full_map(t_all *all);
 int						check_file_extention(t_all *all);

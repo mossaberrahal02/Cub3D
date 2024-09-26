@@ -44,6 +44,7 @@ void	_free(void)
 	t_malloc	*next;
 
 	head = get_head();
+	printf(RED"start freeing resources\n"ENDC);
 	tmp = *head;
 	while (tmp)
 	{
@@ -58,4 +59,5 @@ void	_free(void)
 		tmp = next;
 	}
 	*head = NULL;
+	printf(GREEN"end of freeing resources\n"ENDC);
 }

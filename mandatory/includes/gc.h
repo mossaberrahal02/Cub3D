@@ -6,7 +6,7 @@
 /*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:41:37 by merrahal          #+#    #+#             */
-/*   Updated: 2024/09/22 07:14:57 by merrahal         ###   ########.fr       */
+/*   Updated: 2024/09/27 09:46:12 by merrahal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,4 @@ typedef struct s_malloc
 
 void				gc_push(void *address_to_save);
 void				_free(void);
-void				error_exit(int status, char *str);
 #endif

@@ -47,7 +47,11 @@ typedef struct s_all
 	int					first_sex_valid_lines;
 	int					fd;
 	int					height_full_map;
+	size_t					mini_map_height;
+	size_t					mini_map_width;
 	char				**full_map;
+	char				**full_map2;
+	char				**two_d_map;
 	int					ac;
 	char				**av;
 }						t_all;
@@ -59,9 +63,10 @@ typedef struct s_all
 #define YELLOW  "\033[93m"
 #define ENDC  "\033[0m"
 /* FUNCTIONS */
+size_t	ft_strcpy(char *dest, const char *src);
+int	count_mapfile_height(t_all *all);
 int						fetch_full_map(t_all *all);
 int						check_file_extention(t_all *all);
-int						count_mapfile_height(t_all *all);
 void					ft_close(int fd);
 
 #endif

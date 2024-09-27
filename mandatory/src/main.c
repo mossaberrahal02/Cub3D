@@ -6,9 +6,12 @@ void	full_map_print(t_all *all)
 
 	i = 0;
 	/* TODO this function should be removed */
-	while (all->full_map[i])
+	if (!all->full_map2)
+		return ;
+	printf("printing full map\n");
+	while (all->full_map2[i])
 	{
-		printf("{%s}\n", all->full_map[i]);
+		printf("{%s}\n", all->full_map2[i]);
 		i++;
 	}
 }
@@ -40,7 +43,6 @@ int	has_more_than_six_lines(t_all *all)
 
 int	isnt_valid(char *splitted, t_texture *tmp)
 {
-	//TODO they should not be dupplicated
 	if (strncmp(splitted, "NO", 3) == 0)
 		tmp->no_count++;
 	else if (strncmp(splitted, "SO", 3) == 0)
@@ -71,7 +73,7 @@ int	parse_textures_colors(t_all *all)
 		splitted = ft_split_multi(all->full_map[i], " \t");
 		if (isnt_valid(splitted[0], &tmp) == FAILURE)
 			return (ft_putstr_fd("Error: in textures or collors\n", 2),
-				FAILURE);
+					FAILURE);
 		i++;
 	}
 	if (tmp.f_count == 0 || tmp.c_count == 0 || tmp.no_count == 0
@@ -100,16 +102,10 @@ int	has_only_ones(char *line, int *current_line_len)
 
 int	is_player(t_all *all, char *line, int i)
 {
-	//TODO initialize the player count to 0
 	if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
-	{
 		all->p_count++;
-		if (all->p_count != 1)
-			return (ft_putstr_fd("Error: Many players\n", 2), FAILURE);
-	}
-	if ((line[i] == '0' && line[i + 1] == ' ')
-		|| (line[i] == '0' && line[i + 1] == '\t')
-		|| (line[i] == '0' && line[i - 1] == ' ')
+	if ((line[i] == '0' && line[i + 1] == ' ') || (line[i] == '0' && line[i
+			+ 1] == '\t') || (line[i] == '0' && line[i - 1] == ' ')
 		|| (line[i] == '0' && line[i - 1] == '\t'))
 		return (ft_putstr_fd("Error: invalid map 0 hdaha space\n", 2), FAILURE);
 	return (SUCCESS);
@@ -120,18 +116,16 @@ int	start_end_with_one(t_all *all, char *line, int *current_line_len)
 	int	i;
 
 	i = 1;
-	all->p_count = 0;
 	if (line[0] != '1')
-		return (ft_putstr_fd("Error : begining dyal chi line in the middel of the mini map\n",2), FAILURE);
+		return (ft_putstr_fd("Error : begining dyal chi line in the middel of the mini map\n",
+				2), FAILURE);
 	while (line[i])
 	{
 		if (is_player(all, line, i))
 			return (FAILURE);
-		if (line[i] != ' ' && line[i] != '1'
-			&& line[i] != '\t' && line[i] != '0'
-			&& line[i] != 'N' && line[i] != 'S'
-			&& line[i] != 'E' && line[i] != 'W'
-			&& line[i] != 'D')
+		if (line[i] != ' ' && line[i] != '1' && line[i] != '\t'
+			&& line[i] != '0' && line[i] != 'N' && line[i] != 'S'
+			&& line[i] != 'E' && line[i] != 'W' && line[i] != 'D')
 			return (ft_putstr_fd("Error : wrong character\n", 2), FAILURE);
 		i++;
 	}
@@ -141,8 +135,8 @@ int	start_end_with_one(t_all *all, char *line, int *current_line_len)
 	if (line[i] != '1')
 	{
 		printf("wrong character [%c] in line (%s) \n", line[i], line);
-		return (ft_putstr_fd("Error : ending dyal chi line in the middel of the mini map\n", 2),
-				FAILURE);
+		return (ft_putstr_fd("Error : ending dyal chi line in the middel of the mini map\n",
+				2), FAILURE);
 	}
 	return (SUCCESS);
 }
@@ -161,29 +155,117 @@ int	parse_mini_map(t_all *all)
 	j = 0;
 	i = 6;
 	if (has_only_ones(all->full_map[i++], &first_line_len) == FAILURE)
-	{
 		return (ft_putstr_fd("Error : first line\n", 2), FAILURE);
-	}
-	printf("first_line_len = %d\n", first_line_len);
 	while (all->full_map[i])
 	{
-		printf("i = %d\n", i);
 		if (start_end_with_one(all, all->full_map[i], &current_line_len))
-		{
-
 			return (FAILURE);
-		}
-
 		i++;
-		printf("current_line_len= [%d]\n", current_line_len);
 	}
 	i--;
 	if (has_only_ones(all->full_map[i], &last_line_len) == FAILURE)
-	{
 		return (ft_putstr_fd("Error : last line\n", 2), FAILURE);
-	}
-	printf("last_line_len = %d\n", last_line_len);
+	if (all->p_count != 1)
+		return (ft_putstr_fd("Error: nbr of player\n", 2), FAILURE);
 	return (ft_putstr_fd("good map\n", 2), SUCCESS);
+}
+
+int	check_white_space_in_the_mini_map(t_all *all)
+{
+	int		i;
+	int		tmp;
+	char	*trimmed;
+	char	*trimmed2;
+	all->mini_map_height = 1;
+	all->mini_map_width = 1;
+
+	i = 0;
+	while (all->full_map2[i])
+	{
+		trimmed = ft_strtrim(all->full_map2[i], " \t");
+		gc_push(trimmed);
+		if (!ft_strncmp(trimmed, all->full_map[6], ft_strlen(all->full_map[6])))
+			break ;
+		i++;
+	}
+	tmp = i;
+	while (all->full_map2[i + 1])
+	{
+		all->mini_map_height++;
+		trimmed = ft_strtrim(all->full_map2[i], " \t");
+		trimmed2 = ft_strtrim(all->full_map2[i + 1], " \t");
+		(gc_push(trimmed), gc_push(trimmed2));
+		if (trimmed[0] == '\0' && trimmed2[0] != '\0')
+			return (ft_putstr_fd("Error : nl in the mini map\n", 2), FAILURE);
+		i++;
+	}
+	i = tmp;
+	while (all->full_map2[i])
+	{
+		if (ft_strlen(all->full_map2[i]) > all->mini_map_width)
+			all->mini_map_width = ft_strlen(all->full_map2[i]);
+		i++;
+	}
+	printf("width = %zu\n", all->mini_map_width);
+	i = tmp;
+	size_t j = 0;
+	all->two_d_map = ft_calloc((all->mini_map_height + 1), sizeof(char *));
+	all->two_d_map[all->mini_map_height] = NULL;
+	gc_push(all->two_d_map);
+	while (all->full_map2[i])
+	{
+		all->two_d_map[j] = ft_calloc((all->mini_map_width + 1), sizeof(char));
+		gc_push(all->two_d_map[j]);
+		ft_strcpy(all->two_d_map[j], all->full_map2[i]);
+		i++;
+		j++;
+	}
+	i=0;
+	while (all->two_d_map[i])
+		printf("[%s]\n", all->two_d_map[i++]);
+	i = 0;
+	while (all->two_d_map[i])
+	{
+		j = 0;
+		printf("{");
+		while (j < all->mini_map_width)
+		{
+			if(all->two_d_map[i][j] == '\0')
+				all->two_d_map[i][j] = ' ';
+			printf("%c", all->two_d_map[i][j]);
+			j++;
+		}	
+		i++;
+		printf("}\n");
+	}
+	i=0;
+	while (all->two_d_map[i])
+	{
+		j = 0;
+		printf("{");
+		while (j < all->mini_map_width)
+		{
+			if(all->two_d_map[i][j] == '0'
+			&&
+			(
+				all->two_d_map[i - 1][j] == ' ' || all->two_d_map[i + 1][j] == ' '
+				||
+				all->two_d_map[i][j - 1] == ' ' || all->two_d_map[i][j + 1] == ' '
+				||
+				all->two_d_map[i - 1][j] == '\t' || all->two_d_map[i + 1][j] == '\t'
+				||
+				all->two_d_map[i][j - 1] == '\t' || all->two_d_map[i][j + 1] == '\t'
+			))
+			return (ft_putstr_fd("Error : 0 hdaha empty space\n", 2), FAILURE);
+			j++;
+		}	
+		i++;
+		printf("}\n");
+	}
+	i=0;
+	while (all->two_d_map[i])
+		printf("[%s]\n", all->two_d_map[i++]);
+	return (SUCCESS);
 }
 
 int	check_full_map_content(t_all *all)
@@ -195,7 +277,8 @@ int	check_full_map_content(t_all *all)
 		return (FAILURE);
 	if (parse_mini_map(all) == FAILURE)
 		return (FAILURE);
-	// full_map_print(all);
+	if (check_white_space_in_the_mini_map(all) == FAILURE)
+		return (FAILURE);
 	return (SUCCESS);
 }
 
@@ -203,6 +286,7 @@ int	parsing(t_all *all, int ac, char **av)
 {
 	all->ac = ac;
 	all->av = av;
+	all->p_count = 0;
 	if (fetch_full_map(all))
 		return (FAILURE);
 	if (check_full_map_content(all))
@@ -219,6 +303,7 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		return (_free(), ft_putstr_fd("Error : bad arguments\n", 2), FAILURE);
 	parsing(all, ac, av);
+	// full_map_print(all);
 	_free();
 	printf("end of program\n");
 }

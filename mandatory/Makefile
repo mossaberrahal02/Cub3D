@@ -1,14 +1,15 @@
 NAME = cub3d
 CC = cc
 INCLUDES = -Iincludes
-# CFLAGS = -Wall -Wextra  -g#-Werror
-CFLAGS = -Wall -Wextra -fsanitize=address -g #-Werror
+CFLAGS = -Wall -Wextra  -g#-Werror
+# CFLAGS = -Wall -Wextra -fsanitize=address -g #-Werror
 C_FILES = ${addprefix  src/utils/, utils1.c}
 C_FILES_GNL = ${addprefix gnl/, gc.c gnl.c gnl_utils.c}
-C_FILES_LIBFT = ${addprefix libft/, ft_putstr_fd.c ft_putchar_fd.c ft_substr.c ft_strlen.c \
+C_FILES_LIBFT = ${addprefix libft/, ft_isdigit.c ft_putstr_fd.c ft_putchar_fd.c ft_substr.c ft_strlen.c ft_atoi.c\
 									ft_strjoin.c ft_strdup.c ft_strchr.c ft_calloc.c ft_bzero.c\
 									ft_strncmp.c ft_isalpha.c ft_strtrim.c ft_split_multi.c ft_strlcpy.c}
 O_FILES = ${C_FILES:.c=.o}
+O_FILES += src/main.o
 O_FILES += ${C_FILES_GNL:.c=.o}
 O_FILES += ${C_FILES_LIBFT:.c=.o}
 
@@ -23,7 +24,7 @@ all: ${NAME}
 
 
 ${NAME}: ${O_FILES}
-	${CC} ${CFLAGS} ${INCLUDES} src/main.c lib -o ${NAME}
+	${CC} ${CFLAGS} ${INCLUDES}  lib -o ${NAME}
 	@printf "$(CURSIVE)$(GRAY)	- Compilation finished $(RESET)\n"
 	@printf "$(CURSIVE)$(GRAY)	- Executable ${NAME} is ready $(RESET)\n"
 

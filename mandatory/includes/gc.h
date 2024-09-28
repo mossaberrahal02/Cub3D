@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   gc.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 19:05:02 by merrahal          #+#    #+#             */
-/*   Updated: 2024/09/28 12:20:13 by merrahal         ###   ########.fr       */
+/*   Created: 2024/05/27 15:41:37 by merrahal          #+#    #+#             */
+/*   Updated: 2024/09/27 09:46:12 by merrahal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GC_H
+# define GC_H
+# include <stdbool.h>
+# include <stdlib.h>
 
-int	ft_isdigit(int c)
+typedef struct s_malloc
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
-}
+	void			*address_to_save;
+	struct s_malloc	*next;
+	bool			is_freed;
+}					t_malloc;
+
+void				gc_push(void *address_to_save);
+void				_free(void);
+#endif

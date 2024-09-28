@@ -6,7 +6,7 @@
 /*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 21:55:10 by merrahal          #+#    #+#             */
-/*   Updated: 2024/03/02 16:02:19 by merrahal         ###   ########.fr       */
+/*   Updated: 2024/09/22 07:18:47 by merrahal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = 0;
 	j = 0;
 	concat = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!concat)
-		return (NULL);
 	while (s1[i])
 	{
 		concat[i] = s1[i];

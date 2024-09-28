@@ -6,7 +6,7 @@
 /*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:11:18 by merrahal          #+#    #+#             */
-/*   Updated: 2024/03/02 16:00:48 by merrahal         ###   ########.fr       */
+/*   Updated: 2024/09/28 12:29:47 by merrahal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_isalnum(int c)
 {
-	if (ft_isdigit(c) || ft_isalpha(c))
+	if (ft_isdigit(c) || ft_isalpha(NULL, c))
 		return (1);
 	else
 		return (0);

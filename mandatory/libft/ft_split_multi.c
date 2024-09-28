@@ -1,13 +1,13 @@
 #include "libft.h"
 
-static int is_separator(char c, char *sep)
+static int	is_separator(char c, char *sep)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (sep[i])
 	{
-		if(sep[i] == c)
+		if (sep[i] == c)
 			return (1);
 		i++;
 	}
@@ -38,6 +38,7 @@ static int	is_allocation_safe(char **allocatedArray, int position,
 
 	i = 0;
 	allocatedArray[position] = (char *)malloc(sizeof(char) * word_len);
+	gc_push(allocatedArray[position]);
 	if (!allocatedArray[position])
 	{
 		while (i < position)
@@ -86,6 +87,7 @@ char	**ft_split_multi(char const *s, char *c)
 		return (NULL);
 	words = ft_countwords((char *)s, c);
 	splited = (char **)malloc((words + 1) * sizeof(char *));
+	gc_push(splited);
 	if (!splited)
 		return (NULL);
 	splited[words] = NULL;

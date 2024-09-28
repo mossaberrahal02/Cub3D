@@ -3,10 +3,7 @@
 void	ft_close(int fd)
 {
 	if (close(fd) == -1)
-	{
-		// TODO free what should be freed
-		return (ft_putstr_fd("Error : ft_close()\n", 2), exit(1));
-	}
+		return (_free(), ft_putstr_fd("Error : ft_close()\n", 2), exit(1));
 }
 
 int	count_mapfile_height(t_all *all)

@@ -60,6 +60,8 @@ int	isnt_valid(char *splitted, t_texture *tmp)
 	return (SUCCESS);
 }
 
+
+
 int	parse_textures_colors(t_all *all)
 {
 	int			i;
@@ -74,6 +76,9 @@ int	parse_textures_colors(t_all *all)
 		if (isnt_valid(splitted[0], &tmp) == FAILURE)
 			return (ft_putstr_fd(RED"Error: in textures or collors\n"ENDC, 2),
 					FAILURE);
+		// if (finish_with_xpm(splitted[1]) == FAILURE)
+		// 	return (ft_putstr_fd(RED"Error: bad extension (.xpm)\n"ENDC, 2),
+		// 			FAILURE);
 		i++;
 	}
 	if (tmp.f_count == 0 || tmp.c_count == 0 || tmp.no_count == 0
@@ -154,7 +159,7 @@ int	parse_mini_map(t_all *all)
 		return (ft_putstr_fd(RED"Error : last line\n"ENDC, 2), FAILURE);
 	if (all->p_count != 1)
 		return (ft_putstr_fd(RED"Error: nbr of player\n"ENDC, 2), FAILURE);
-	return (ft_putstr_fd(YELLOW"good map\n"ENDC, 2), SUCCESS);
+	return (/* ft_putstr_fd(YELLOW"good map\n"ENDC, 2),  */SUCCESS);
 }
 
 int	check_white_space_in_the_mini_map(t_all *all)
@@ -224,7 +229,7 @@ int	check_white_space_in_the_mini_map(t_all *all)
 		j = 0;
 		while (j < all->mini_map_width)
 		{
-			if(all->two_d_map[i][j] == '0'
+			if((all->two_d_map[i][j] == '0' || all->two_d_map[i][j] == 'N' || all->two_d_map[i][j] == 'E' || all->two_d_map[i][j] == 'W' || all->two_d_map[i][j] == 's')
 			&&
 			(
 				all->two_d_map[i - 1][j] == ' ' || all->two_d_map[i + 1][j] == ' '
@@ -235,12 +240,194 @@ int	check_white_space_in_the_mini_map(t_all *all)
 				||
 				all->two_d_map[i][j - 1] == '\t' || all->two_d_map[i][j + 1] == '\t'
 			))
-			return (ft_putstr_fd(RED"Error : 0 hdaha empty space\n"ENDC, 2), FAILURE);
+			return (ft_putstr_fd(RED"Error : 0 wla Player acces empty space\n"ENDC, 2), FAILURE);
 			j++;
-		}	
+		}
 		i++;
 	}
 	return (SUCCESS);
+}
+//TODO texture files should be valide end with .xpm
+
+void convert_rgb(t_all *all, char **splitted, char c)
+{
+	if(c == 'C')
+	{
+		all->c.r = ft_atoi(splitted[1]);
+		all->c.g = ft_atoi(splitted[2]);
+		all->c.b = ft_atoi(splitted[3]);
+	}
+	else if(c == 'F')
+	{
+		all->f.r = ft_atoi(splitted[1]);
+		all->f.g = ft_atoi(splitted[2]);
+		all->f.b = ft_atoi(splitted[3]);
+	}
+}
+
+int f_c_are_valid(t_all *all, char **splitted)
+{
+	int len;
+
+	len = 0;
+	while (splitted[len])
+		len++;
+	if(len != 4)
+	{
+		printf(RED"Error: %s not valid\n"ENDC, splitted[0]);
+		return (FAILURE);
+	}
+	convert_rgb(all, splitted, splitted[0][0]);
+	return (SUCCESS);
+}
+
+int count_q(t_all *all, char **splitted)
+{
+	(void) all;
+	int i = 1;
+	int j = 0;
+	int q;
+	q = 0;
+
+	while (splitted[i])
+	{
+		j = 0;
+		while (splitted[i][j])
+		{
+			if(splitted[i][j] == ',')
+				q++;
+			j++;
+		}
+		i++;
+	}
+	if(q != 2)
+	{
+		printf("\nq = %d\n", q);
+		return (ft_putstr_fd(RED"Error : a lot of ','\n"ENDC, 2), FAILURE);
+	}
+	return SUCCESS;
+}
+
+// int parse_q(t_all *all, char **splitted)
+// {
+// 	int i = 0;
+// 	while (splitted[i])
+// 	{
+// 		printf("{%s}\n", splitted[i]);
+// 		i++;
+// 	}
+	
+// }
+
+int finish_with_xpm(char *to_check_xpm)
+{
+	int len = 0;
+	while (to_check_xpm[len])
+		len++;
+	if (ft_strncmp(((to_check_xpm) + (len - 4)), ".xpm", 4))
+		return (FAILURE);
+	return (SUCCESS);
+}
+
+void ft_open(t_all *all, char **xpm_file)
+{
+	if(open(xpm_file[1], O_RDONLY) == -1)
+	{
+		perror("open");
+		_free();
+		exit(1);
+	}
+	if (!ft_strncmp(xpm_file[0], "NO", 3))
+		all->textures.no = xpm_file[1];
+	else if (!ft_strncmp(xpm_file[0], "SO", 3))
+		all->textures.so = xpm_file[1];
+	else if (!ft_strncmp(xpm_file[0], "EA", 3))
+		all->textures.ea = xpm_file[1];
+	else if (!ft_strncmp(xpm_file[0], "WE", 3))
+		all->textures.we = xpm_file[1];
+}
+
+int parse_f_c(t_all *all)
+{
+	int i = 0;
+	char **(splitted), **(splitted2) ;
+	while (all->full_map[i] && i < 6)
+	{
+		splitted2 = ft_split_multi(all->full_map[i], " \t");
+		if (!ft_strncmp(splitted2[0], "NO", 3) || !ft_strncmp(splitted2[0], "SO", 3)
+		||
+		!ft_strncmp(splitted2[0], "EA", 3) || !ft_strncmp(splitted2[0], "WE", 3))
+		{
+			if (finish_with_xpm(splitted2[1]) == FAILURE)
+				return (ft_putstr_fd(RED"Error: bad extension (.xpm)\n"ENDC, 2),
+					FAILURE);
+			ft_open(all, splitted2);
+		}
+
+
+		if (!ft_strncmp(splitted2[0], "F", 2) || !ft_strncmp(splitted2[0], "C", 2))
+		{
+			if (count_q(all, splitted2) == FAILURE)
+				return (FAILURE);
+		}
+		splitted = ft_split_multi(all->full_map[i], " \t,");
+		if(!ft_strncmp(splitted[0], "F", 2) || !ft_strncmp(splitted[0], "C", 2))
+		{
+			if (f_c_are_valid(all, splitted) == FAILURE)
+				return (FAILURE);
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+
+int ft_isspace(char *to_check)
+{
+	int i = 0;
+	while (to_check[i])
+	{
+		if(to_check[i] != ' ' && to_check[i] != '\t' && to_check[i] != '\n')
+			return (2);
+		i++;
+	}
+	return (3);
+}
+
+int count(char **to_count)
+{
+	int i = 0;
+	int j = 0;
+	while (to_count[i])
+	{
+		if(ft_isspace(to_count[i]) == 3)
+		{
+			i++;
+			continue;
+		}
+		j++;
+		i++;
+	}
+	return j;	
+}
+
+int check_comma(t_all *all)
+{
+	int i = 0;
+	char *tmp;
+	char **splitted;
+	while (all->full_map[i] && i < 6)
+	{
+		if (!ft_strncmp(&all->full_map[i][0], "F", 1) || !ft_strncmp(&all->full_map[i][0], "C", 1))
+		{
+			tmp = ft_substr(all->full_map[i], 1, ft_strlen(all->full_map[i]));
+			gc_push(tmp);
+			splitted = ft_split_multi(tmp, ",");
+			if(count(splitted) != 3)
+				return (ft_putstr_fd(RED"Error : more or less then 3\n"ENDC, 2), FAILURE);
+		}
+		i++;
+	}
+	return SUCCESS;
 }
 
 int	check_full_map_content(t_all *all)
@@ -253,6 +440,10 @@ int	check_full_map_content(t_all *all)
 	if (parse_mini_map(all) == FAILURE)
 		return (FAILURE);
 	if (check_white_space_in_the_mini_map(all) == FAILURE)
+		return (FAILURE);
+	if (check_comma(all) == FAILURE)
+		return (FAILURE);
+	if (parse_f_c(all) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }
@@ -279,6 +470,17 @@ int	main(int ac, char **av)
 		return (_free(), ft_putstr_fd(RED"Error : bad arguments\n"ENDC, 2), FAILURE);
 	parsing(all, ac, av);
 	// full_map_print(all);
+	printf("so = %s\n", all->textures.so);
+	printf("no = %s\n", all->textures.no);
+	printf("we = %s\n", all->textures.we);
+	printf("ea = %s\n", all->textures.ea);
+
+	printf("f.r = %d\n", all->f.r);
+	printf("f.g = %d\n", all->f.g);
+	printf("f.b = %d\n", all->f.b);
+	printf("c.r = %d\n", all->c.r);
+	printf("c.g = %d\n", all->c.g);
+	printf("c.b = %d\n", all->c.b);
 	_free();
 	printf("end of program\n");
 }

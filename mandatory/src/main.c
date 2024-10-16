@@ -468,7 +468,9 @@ int	main(int ac, char **av)
 	gc_push(all);
 	if (ac != 2)
 		return (_free(), ft_putstr_fd(RED"Error : bad arguments\n"ENDC, 2), FAILURE);
+
 	parsing(all, ac, av);
+
 	// full_map_print(all);
 	printf("so = %s\n", all->textures.so);
 	printf("no = %s\n", all->textures.no);

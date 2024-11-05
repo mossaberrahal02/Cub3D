@@ -14,13 +14,14 @@
 
 int	ft_isalpha(char *str, int c)
 {
-	if((str[0] == '+' || str[0] == '-') && str[1] == '\0')
+	if ((str[0] == '+' || str[0] == '-') && str[1] == '\0')
 	{
 		printf("bad character in c or f\n");
 		_free();
 		exit(1);
 	}
-	if ((c <= 'z' && c >= 'a') || (c <= 'Z' && c >= 'A') || c == '+' || c == '-')
+	if ((c <= 'z' && c >= 'a') || (c <= 'Z' && c >= 'A') || c == '+'
+		|| c == '-')
 	{
 		printf("bad character in c or f\n");
 		_free();

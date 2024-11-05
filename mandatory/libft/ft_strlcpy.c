@@ -34,8 +34,8 @@ size_t	ft_strcpy(char *dest, const char *src)
 	size_t	i;
 
 	i = 0;
-	if(!dest || !src)
-		return 0;
+	if (!dest || !src)
+		return (0);
 	while (src[i])
 	{
 		dest[i] = src[i];

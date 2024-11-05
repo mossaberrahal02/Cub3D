@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/04 22:22:00 by merrahal          #+#    #+#             */
+/*   Updated: 2024/11/04 22:22:01 by merrahal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -12,7 +24,6 @@
 # include <unistd.h>
 # include <string.h>
 # include <ctype.h>
-
 
 typedef struct s_all		t_all;
 typedef struct s_rgb		t_rgb;

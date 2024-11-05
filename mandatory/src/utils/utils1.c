@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils1.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/04 22:22:56 by merrahal          #+#    #+#             */
+/*   Updated: 2024/11/04 22:22:57 by merrahal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	ft_close(int fd)
@@ -10,12 +22,12 @@ int	count_mapfile_height(t_all *all)
 {
 	char	*line;
 	int		fd;
-	size_t		i;
+	size_t	i;
 
 	fd = open(all->av[1], O_RDONLY);
 	i = 0;
 	if (fd < 0)
-		return (ft_putstr_fd(RED"Error : mapfile\n"ENDC, 2), 1);
+		return (ft_putstr_fd(RED "Error : mapfile\n" ENDC, 2), 1);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -33,7 +45,7 @@ int	check_file_extention(t_all *all)
 
 	len = ft_strlen(all->av[1]);
 	if (ft_strncmp(((all->av[1]) + (len - 4)), ".cub", 4))
-		return (ft_putstr_fd(RED"Error : bad extention\n"ENDC, 2), FAILURE);
+		return (ft_putstr_fd(RED "Error : bad extention\n" ENDC, 2), FAILURE);
 	return (SUCCESS);
 }
 
@@ -48,7 +60,8 @@ int	fetch_full_map(t_all *all)
 	all->height_full_map = count_mapfile_height(all);
 	all->fd = open(all->av[1], O_RDONLY);
 	if (all->fd < 0)
-		return (ft_putstr_fd(RED"Error : error with mapfile\n"ENDC, 2), FAILURE);
+		return (ft_putstr_fd(RED "Error : error with mapfile\n" ENDC, 2),
+			FAILURE);
 	all->full_map = ft_calloc((all->height_full_map + 1), sizeof(char *));
 	all->full_map2 = ft_calloc((all->height_full_map + 1), sizeof(char *));
 	(gc_push(all->full_map), gc_push(all->full_map2));

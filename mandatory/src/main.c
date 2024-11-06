@@ -6,7 +6,7 @@
 /*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:22:29 by merrahal          #+#    #+#             */
-/*   Updated: 2024/11/05 19:40:41 by merrahal         ###   ########.fr       */
+/*   Updated: 2024/11/06 02:08:40 by merrahal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ int	parse_mini_map(t_all *all)
 int	check_white_space_in_the_mini_map(t_all *all)
 {
 	int		i;
-	int		tmp;
+	int		tmp_first_line_mini_map;
 	char	*trimmed;
 	char	*trimmed2;
 	size_t	j;
@@ -193,7 +193,7 @@ int	check_white_space_in_the_mini_map(t_all *all)
 			break ;
 		i++;
 	}
-	tmp = i;
+	tmp_first_line_mini_map = i;
 	while (all->full_map2[i + 1])
 	{
 		all->mini_map_height++;
@@ -205,14 +205,14 @@ int	check_white_space_in_the_mini_map(t_all *all)
 				FAILURE);
 		i++;
 	}
-	i = tmp;
+	i = tmp_first_line_mini_map;
 	while (all->full_map2[i])
 	{
 		if (ft_strlen(all->full_map2[i]) > all->mini_map_width)
 			all->mini_map_width = ft_strlen(all->full_map2[i]);
 		i++;
 	}
-	i = tmp;
+	i = tmp_first_line_mini_map;
 	j = 0;
 	all->two_d_map = ft_calloc((all->mini_map_height + 1), sizeof(char *));
 	all->two_d_map[all->mini_map_height] = NULL;
@@ -226,6 +226,8 @@ int	check_white_space_in_the_mini_map(t_all *all)
 		j++;
 	}
 	i = 0;
+	// fill the reste of the lines with spaces so i can 
+	// check later if there is space
 	while (all->two_d_map[i])
 	{
 		j = 0;
@@ -490,16 +492,25 @@ int	main(int ac, char **av)
 		return (_free(), ft_putstr_fd(RED "Error : bad arguments\n" ENDC, 2),
 			FAILURE);
 	parsing(all, ac, av);
-	printf("so = %s\n", all->textures.so);
-	printf("no = %s\n", all->textures.no);
-	printf("we = %s\n", all->textures.we);
-	printf("ea = %s\n", all->textures.ea);
-	printf("f.r = %d\n", all->f.r);
-	printf("f.g = %d\n", all->f.g);
-	printf("f.b = %d\n", all->f.b);
-	printf("c.r = %d\n", all->c.r);
-	printf("c.g = %d\n", all->c.g);
-	printf("c.b = %d\n", all->c.b);
+	// printf("so = %s\n", all->textures.so);
+	// printf("no = %s\n", all->textures.no);
+	// printf("we = %s\n", all->textures.we);
+	// printf("ea = %s\n", all->textures.ea);
+	// printf("f.r = %d\n", all->f.r);
+	// printf("f.g = %d\n", all->f.g);
+	// printf("f.b = %d\n", all->f.b);
+	// printf("c.r = %d\n", all->c.r);
+	// printf("c.g = %d\n", all->c.g);
+	// printf("c.b = %d\n", all->c.b);
+
+
+	printf("mini_map_width = %zu\n", all->mini_map_width);
+	printf("mini_map_height = %zu\n", all->mini_map_height);
+	int y = 0;
+	printf("printing mini map\n");
+	while (all->two_d_map[y])
+		printf("{%s}\n", all->two_d_map[y++]);
+	// mini map li kayna west l file hiya hadi li f all->two_d_map
 	_free();
 	printf("end of program\n");
 }

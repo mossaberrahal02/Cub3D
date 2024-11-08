@@ -3,7 +3,7 @@ CC = cc
 INCLUDES = -Iincludes
 CFLAGS = -Wall -Wextra  -g#-Werror
 # CFLAGS = -Wall -Wextra -fsanitize=address -g #-Werror
-C_FILES = ${addprefix  src/utils/, utils1.c}
+C_FILES = ${addprefix  src/utils/, utils1.c utils2.c utils3.c utils4.c}
 C_FILES_GNL = ${addprefix gnl/, gc.c gnl.c gnl_utils.c}
 C_FILES_LIBFT = ${addprefix libft/, ft_isdigit.c ft_putstr_fd.c ft_putchar_fd.c ft_substr.c ft_strlen.c ft_atoi.c\
 									ft_strjoin.c ft_strdup.c ft_strchr.c ft_calloc.c ft_bzero.c\

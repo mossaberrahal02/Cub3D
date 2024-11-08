@@ -6,7 +6,7 @@
 /*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:22:00 by merrahal          #+#    #+#             */
-/*   Updated: 2024/11/04 22:22:01 by merrahal         ###   ########.fr       */
+/*   Updated: 2024/11/08 12:11:28 by merrahal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 # include "gc.h"
 # include "gnl.h"
 # include "libft.h"
+# include <ctype.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <unistd.h>
-# include <string.h>
-# include <ctype.h>
 
 typedef struct s_all		t_all;
 typedef struct s_rgb		t_rgb;
@@ -76,6 +76,25 @@ typedef struct s_all
 # define YELLOW "\033[93m"
 # define ENDC "\033[0m"
 /* FUNCTIONS */
+int							parsing(t_all *all, int ac, char **av);
+int							check_full_map_content(t_all *all);
+int							check_comma(t_all *all);
+int							count(char **to_count);
+int							ft_isspace(char *to_check);
+int							parse_f_c(t_all *all);
+void						ft_open(t_all *all, char **xpm_file);
+int							finish_with_xpm(char *to_check_xpm);
+int							count_q(t_all *all, char **splitted);
+int							f_c_are_valid(t_all *all, char **splitted);
+void						convert_rgb(t_all *all, char **splitted, char c);
+int							check_white_space_in_the_mini_map(t_all *all);
+int							parse_mini_map(t_all *all);
+int							start_end_with_one(t_all *all, char *line);
+int							is_player(t_all *all, char *line, int i);
+int							has_only_ones(char *line);
+int							parse_textures_colors(t_all *all);
+int							isnt_valid(char *splitted, t_texture *tmp);
+int							has_more_than_six_lines(t_all *all);
 size_t						ft_strcpy(char *dest, const char *src);
 int							count_mapfile_height(t_all *all);
 int							fetch_full_map(t_all *all);

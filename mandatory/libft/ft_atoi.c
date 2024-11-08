@@ -6,7 +6,7 @@
 /*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 19:53:10 by merrahal          #+#    #+#             */
-/*   Updated: 2024/11/05 19:53:11 by merrahal         ###   ########.fr       */
+/*   Updated: 2024/11/08 12:18:03 by merrahal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	ft_atoi(char *str)
 			sign *= -1;
 		i++;
 	}
-	// printf("str = {%s}\n", str);
 	while (!ft_isalpha(str, str[i]) && str[i] <= '9' && str[i] >= '0')
 	{
 		result = result * 10 + str[i] - '0';

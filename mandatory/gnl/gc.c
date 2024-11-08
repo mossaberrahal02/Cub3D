@@ -6,7 +6,7 @@
 /*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:21:39 by merrahal          #+#    #+#             */
-/*   Updated: 2024/11/04 22:21:40 by merrahal         ###   ########.fr       */
+/*   Updated: 2024/11/08 12:17:50 by merrahal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	_free(void)
 	t_malloc	*next;
 
 	head = get_head();
-	printf("start freeing resources\n");
 	tmp = *head;
 	while (tmp)
 	{
@@ -71,5 +70,4 @@ void	_free(void)
 		tmp = next;
 	}
 	*head = NULL;
-	printf(GREEN"end of freeing resources\n"ENDC);
 }

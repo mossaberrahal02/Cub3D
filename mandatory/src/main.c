@@ -6,7 +6,7 @@
 /*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:22:29 by merrahal          #+#    #+#             */
-/*   Updated: 2024/11/08 12:23:50 by merrahal         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:22:50 by merrahal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,6 @@ int	parsing(t_all *all, int ac, char **av)
 int	main(int ac, char **av)
 {
 	t_all	*all;
-	int		y;
 
 	all = ft_calloc(1, sizeof(t_all));
 	gc_push(all);
@@ -182,10 +181,15 @@ int	main(int ac, char **av)
 	parsing(all, ac, av);
 	printf("mini_map_width = %zu\n", all->mini_map_width);
 	printf("mini_map_height = %zu\n", all->mini_map_height);
-	y = 0;
-	printf("printing mini map\n");
-	while (all->two_d_map[y])
-		printf("{%s}\n", all->two_d_map[y++]);
-	// mini map li kayna west l file hiya hadi li f all->two_d_map
+	printf("all->player.dir_x = %d\n", all->player.dir_x);
+	printf("all->player.dir_y = %d\n", all->player.dir_y);
+	printf("all->player.row = %d\n", all->player.row);
+	printf("all->player.column = %d\n", all->player.column);
+	printf("all->player.no = %s\n", all->textures.no);
+	printf("all->player.so = %s\n", all->textures.so);
+	printf("all->player.ea = %s\n", all->textures.ea);
+	printf("all->player.we = %s\n", all->textures.we);
+
 	_free();
 }
+//TODO check every texture file if its empty or not i think its gonna segv

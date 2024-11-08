@@ -93,5 +93,6 @@ int	check_full_map_content(t_all *all)
 		return (FAILURE);
 	if (parse_f_c(all) == FAILURE)
 		return (FAILURE);
+	set_player_direction(all);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: merrahal <merrahal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:22:00 by merrahal          #+#    #+#             */
-/*   Updated: 2024/11/08 12:11:28 by merrahal         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:18:42 by merrahal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ typedef struct s_texture
 	int						ea_count;
 }							t_texture;
 
+typedef struct s_player
+{
+	int dir_x;
+	int dir_y;
+	int row;
+	int column;
+}t_player;
+
 typedef struct s_all
 {
 	t_rgb					c;
@@ -67,6 +75,7 @@ typedef struct s_all
 	char					**two_d_map;
 	int						ac;
 	char					**av;
+	t_player				player;
 }							t_all;
 
 # define SUCCESS 0
@@ -76,6 +85,9 @@ typedef struct s_all
 # define YELLOW "\033[93m"
 # define ENDC "\033[0m"
 /* FUNCTIONS */
+void set_player_col_row(t_all *all, int i, int j)
+;
+void set_player_direction(t_all *all);
 int							parsing(t_all *all, int ac, char **av);
 int							check_full_map_content(t_all *all);
 int							check_comma(t_all *all);

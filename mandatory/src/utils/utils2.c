@@ -68,7 +68,7 @@ int	parse_textures_colors(t_all *all)
 		|| tmp.no_count > 1 || tmp.so_count > 1 || tmp.we_count > 1
 		|| tmp.ea_count > 1 || tmp.f_count > 1 || tmp.c_count > 1)
 		return (ft_putstr_fd(RED "Error: dupplicates\n" ENDC, 2), FAILURE);
-	return (ft_putstr_fd("textures and collors are good\n", 2), SUCCESS);
+	return (SUCCESS);
 }
 
 int	has_only_ones(char *line)
